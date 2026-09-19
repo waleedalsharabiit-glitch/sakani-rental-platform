@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+Thumbs.db
 
 # debug
 npm-debug.log*
@@ -32,10 +33,45 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
-
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.env
+.env.*
+!.env.example
+
+prisma/*.db
+prisma/*.db-journal
+
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+
+*.db
+*.db-journal
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# AI coding assistant skills
+.agents/
+.claude/
+.cursor/
+.devin/
