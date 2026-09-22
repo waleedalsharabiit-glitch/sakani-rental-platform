@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { signOut } from "next-auth/react";
-
 import {
   ArrowLeft,
   Building2,
@@ -16,6 +15,8 @@ import {
   Search,
   UserRound,
   X,
+  Star,
+  type LucideIcon,
 } from "lucide-react";
 
 type Props = {
@@ -25,7 +26,11 @@ type Props = {
   };
 };
 
-const navItems = [
+const navItems: {
+  title: string;
+  href: string;
+  icon: LucideIcon;
+}[] = [
   {
     title: "الرئيسية",
     href: "/dashboard",
@@ -45,6 +50,11 @@ const navItems = [
     title: "المفضلة",
     href: "/dashboard/favorites",
     icon: Heart,
+  },
+  {
+    title: "تقييماتي",
+    href: "/dashboard/reviews",
+    icon: Star,
   },
   {
     title: "الملف الشخصي",

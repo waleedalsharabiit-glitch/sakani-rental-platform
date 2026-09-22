@@ -4,11 +4,6 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-type BookingActionState = {
-  success: boolean;
-  message: string;
-};
-
 async function requireAdmin() {
   const session = await auth();
 
@@ -24,7 +19,7 @@ async function requireAdmin() {
 
 export async function updateBookingStatus(
   formData: FormData
-): Promise<BookingActionState> {
+): Promise<void> {
   try {
     await requireAdmin();
 
@@ -35,20 +30,14 @@ export async function updateBookingStatus(
       typeof bookingId !== "string" ||
       !bookingId
     ) {
-      return {
-        success: false,
-        message: "معرف الحجز غير صالح",
-      };
+      return;
     }
 
     if (
       status !== "CONFIRMED" &&
       status !== "CANCELLED"
     ) {
-      return {
-        success: false,
-        message: "حالة الحجز غير صالحة",
-      };
+      return;
     }
 
     const booking = await prisma.booking.findUnique({
@@ -65,10 +54,7 @@ export async function updateBookingStatus(
     });
 
     if (!booking) {
-      return {
-        success: false,
-        message: "الحجز غير موجود",
-      };
+      return;
     }
 
     // لا يمكن تعديل الحجز المكتمل أو الملغي
@@ -76,10 +62,7 @@ export async function updateBookingStatus(
       booking.status === "COMPLETED" ||
       booking.status === "CANCELLED"
     ) {
-      return {
-        success: false,
-        message: "لا يمكن تعديل حالة هذا الحجز",
-      };
+      return;
     }
 
     // عند التأكيد، نتحقق مرة أخرى من عدم وجود
@@ -111,11 +94,7 @@ export async function updateBookingStatus(
         });
 
       if (conflictingBooking) {
-        return {
-          success: false,
-          message:
-            "لا يمكن تأكيد الحجز لأن هناك حجزًا مؤكدًا متعارضًا مع نفس الفترة",
-        };
+        return;
       }
     }
 
@@ -136,24 +115,10 @@ export async function updateBookingStatus(
     revalidatePath(
       `/properties/${booking.propertyId}`
     );
-
-    return {
-      success: true,
-      message:
-        status === "CONFIRMED"
-          ? "تم تأكيد الحجز بنجاح"
-          : "تم إلغاء الحجز بنجاح",
-    };
   } catch (error) {
     console.error(
       "UPDATE_BOOKING_STATUS_ERROR",
       error
     );
-
-    return {
-      success: false,
-      message:
-        "حدث خطأ أثناء تحديث الحجز",
-    };
   }
 }

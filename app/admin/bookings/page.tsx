@@ -438,11 +438,7 @@ export default async function AdminBookingsPage() {
                       {booking.status === "PENDING" && (
                         <div className="mt-6 flex flex-col gap-3 border-t border-slate-800 pt-5 sm:flex-row sm:justify-end">
 
-                          <form
-                            action={
-                              updateBookingStatus
-                            }
-                          >
+                         <form action={updateBookingStatus}>
                             <input
                               type="hidden"
                               name="bookingId"
@@ -464,11 +460,7 @@ export default async function AdminBookingsPage() {
                             </button>
                           </form>
 
-                          <form
-                            action={
-                              updateBookingStatus
-                            }
-                          >
+             <form action={updateBookingStatus}>
                             <input
                               type="hidden"
                               name="bookingId"
@@ -501,11 +493,7 @@ export default async function AdminBookingsPage() {
                             تم تأكيد هذا الحجز
                           </div>
 
-                          <form
-                            action={
-                              updateBookingStatus
-                            }
-                          >
+                  <form action={updateBookingStatus}>
                             <input
                               type="hidden"
                               name="bookingId"

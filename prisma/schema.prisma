@@ -148,3 +148,24 @@ model Favorite {
   @@index([userId])
   @@index([propertyId])
 }
+
+
+model SiteSettings {
+  id                  String   @id @default("site")
+  siteName            String   @default("سَكَني")
+  siteDescription     String   @default("منصة سَكَني لاستكشاف وحجز العقارات السكنية")
+  contactEmail        String   @default("admin@sakani.com")
+  contactPhone        String   @default("")
+  currency            String   @default("YER")
+
+  bookingsEnabled     Boolean  @default(true)
+  autoConfirmBookings Boolean  @default(false)
+  registrationEnabled Boolean  @default(true)
+  maintenanceMode     Boolean  @default(false)
+  emailNotifications  Boolean  @default(true)
+
+  propertiesPerPage   Int      @default(9)
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}

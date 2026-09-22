@@ -224,3 +224,22 @@ export async function deleteCategory(
     message: "تم حذف التصنيف بنجاح",
   };
 }
+
+
+export async function deleteCategoryAction(
+  _prevState: CategoryActionState,
+  formData: FormData
+): Promise<CategoryActionState> {
+  await requireAdmin();
+
+  const id = formData.get("id");
+
+  if (typeof id !== "string" || !id) {
+    return {
+      success: false,
+      message: "معرف التصنيف غير صالح",
+    };
+  }
+
+  return deleteCategory(id);
+}

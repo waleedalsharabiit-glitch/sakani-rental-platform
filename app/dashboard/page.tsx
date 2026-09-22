@@ -13,6 +13,7 @@ import {
   TrendingUp,
   Building2,
   ChevronLeft,
+  Star,
 } from "lucide-react";
 
 import { auth } from "@/auth";
@@ -326,6 +327,13 @@ export default async function DashboardPage() {
             title="المفضلة"
             description="العقارات التي حفظتها"
           />
+
+          <QuickAction
+  href="/dashboard/reviews"
+  icon={<Star className="h-5 w-5" />}
+  title="تقييماتي"
+  description="إدارة تقييماتك وآرائك"
+/>
         </div>
       </section>
 
