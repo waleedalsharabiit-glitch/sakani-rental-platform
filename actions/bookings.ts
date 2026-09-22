@@ -10,23 +10,13 @@ type BookingState = {
   message: string;
 };
 
-export const initialBookingState: BookingState = {
-  success: false,
-  message: "",
-};
-
 function getString(formData: FormData, key: string) {
   const value = formData.get(key);
-
-  return typeof value === "string"
-    ? value.trim()
-    : "";
+  return typeof value === "string" ? value.trim() : "";
 }
 
 function startOfDay(value: string) {
-  const date = new Date(`${value}T00:00:00`);
-
-  return date;
+  return new Date(`${value}T00:00:00`);
 }
 
 export async function createBooking(
@@ -60,13 +50,8 @@ export async function createBooking(
       };
     }
 
-    const startDate = startOfDay(
-      validation.data.startDate
-    );
-
-    const endDate = startOfDay(
-      validation.data.endDate
-    );
+    const startDate = startOfDay(validation.data.startDate);
+    const endDate = startOfDay(validation.data.endDate);
 
     if (
       Number.isNaN(startDate.getTime()) ||
@@ -91,8 +76,7 @@ export async function createBooking(
     if (endDate <= startDate) {
       return {
         success: false,
-        message:
-          "تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول",
+        message: "تاريخ المغادرة يجب أن يكون بعد تاريخ الوصول",
       };
     }
 
@@ -114,33 +98,16 @@ export async function createBooking(
       };
     }
 
-    /*
-     * التعارض:
-     *
-     * حجز جديد:
-     * startDate -> endDate
-     *
-     * يتعارض إذا:
-     *
-     * booking.startDate < newEnd
-     * AND
-     * booking.endDate > newStart
-     *
-     * نستثني الحجوزات الملغاة.
-     */
     const conflictingBooking =
       await prisma.booking.findFirst({
         where: {
           propertyId: property.id,
-
           status: {
             not: "CANCELLED",
           },
-
           startDate: {
             lt: endDate,
           },
-
           endDate: {
             gt: startDate,
           },
@@ -153,8 +120,7 @@ export async function createBooking(
     if (conflictingBooking) {
       return {
         success: false,
-        message:
-          "العقار محجوز خلال الفترة التي اخترتها",
+        message: "العقار محجوز خلال الفترة التي اخترتها",
       };
     }
 
@@ -173,8 +139,7 @@ export async function createBooking(
       };
     }
 
-    const totalPrice =
-      nights * property.price;
+    const totalPrice = nights * property.price;
 
     await prisma.booking.create({
       data: {
@@ -187,10 +152,7 @@ export async function createBooking(
       },
     });
 
-    revalidatePath(
-      `/properties/${property.id}`
-    );
-
+    revalidatePath(`/properties/${property.id}`);
     revalidatePath("/dashboard");
     revalidatePath("/dashboard/bookings");
     revalidatePath("/admin");
@@ -206,8 +168,7 @@ export async function createBooking(
 
     return {
       success: false,
-      message:
-        "حدث خطأ أثناء إنشاء الحجز. حاول مرة أخرى.",
+      message: "حدث خطأ أثناء إنشاء الحجز. حاول مرة أخرى.",
     };
   }
 }

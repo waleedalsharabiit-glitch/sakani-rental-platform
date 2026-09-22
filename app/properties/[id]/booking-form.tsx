@@ -10,11 +10,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import {
-  createBooking,
-  initialBookingState,
-} from "@/actions/bookings";
-
+import { createBooking } from "@/actions/bookings";
+const initialBookingState = {
+  success: false,
+  message: "",
+};
 type BookingFormProps = {
   propertyId: string;
   price: number;

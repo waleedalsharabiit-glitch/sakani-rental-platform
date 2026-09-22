@@ -25,7 +25,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           return null;
         }
 
-        const email = String(credentials.email).toLowerCase().trim();
+        const email = String(credentials.email)
+          .toLowerCase()
+          .trim();
+
         const password = String(credentials.password);
 
         const user = await prisma.user.findUnique({
@@ -62,23 +65,35 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     strategy: "jwt",
   },
 
-callbacks: {
-  async jwt({ token, user }) {
-    if (user) {
-      token.role = user.role;
-    }
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        // حفظ معرف المستخدم داخل JWT
+        token.id = user.id;
 
-    return token;
+        // حفظ صلاحية المستخدم
+        token.role = user.role;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user) {
+        // نقل ID من JWT إلى Session
+        session.user.id = String(
+          token.id ?? token.sub ?? ""
+        );
+
+        // نقل الصلاحية من JWT إلى Session
+        if (token.role) {
+          session.user.role = token.role;
+        }
+      }
+
+      return session;
+    },
   },
-
-  async session({ session, token }) {
-    if (session.user && token.role) {
-      session.user.role = token.role;
-    }
-
-    return session;
-  },
-},
 
   pages: {
     signIn: "/login",
