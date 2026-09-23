@@ -75,3 +75,8 @@ yarn-error.log*
 .claude/
 .cursor/
 .devin/
+
+
+# Local SQLite backup
+dev.db
+dev.db.backup
