@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SignOutButton from "@/components/auth/sign-out-button";
 import {
   ArrowLeft,
   CalendarDays,
@@ -246,35 +247,37 @@ export default async function ProfilePage() {
             انتقل إلى الأقسام المرتبطة بحسابك.
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href="/dashboard/bookings"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-gradient-to-l from-sky-500 to-blue-600 px-5 text-sm font-black text-white transition hover:from-sky-400 hover:to-blue-500"
-            >
-              حجوزاتي
-            </Link>
+         <div className="mt-6 flex flex-wrap gap-3">
+  <Link
+    href="/dashboard/bookings"
+    className="inline-flex h-11 items-center justify-center rounded-xl bg-gradient-to-l from-sky-500 to-blue-600 px-5 text-sm font-black text-white transition hover:from-sky-400 hover:to-blue-500"
+  >
+    حجوزاتي
+  </Link>
 
-            <Link
-              href="/dashboard/favorites"
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-bold text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
-            >
-              المفضلة
-            </Link>
+  <Link
+    href="/dashboard/favorites"
+    className="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-bold text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
+  >
+    المفضلة
+  </Link>
 
-            <Link
-              href="/dashboard/reviews"
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-bold text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
-            >
-              تقييماتي
-            </Link>
+  <Link
+    href="/dashboard/reviews"
+    className="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-bold text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
+  >
+    تقييماتي
+  </Link>
 
-            <Link
-              href="/properties"
-              className="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-bold text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
-            >
-              استكشاف العقارات
-            </Link>
-          </div>
+  <Link
+    href="/properties"
+    className="inline-flex h-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-5 text-sm font-bold text-slate-300 transition hover:bg-white/[0.07] hover:text-white"
+  >
+    استكشاف العقارات
+  </Link>
+
+  <SignOutButton />
+</div>
         </section>
       </div>
     </main>
